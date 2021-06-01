@@ -4,9 +4,18 @@ const redux = require("redux");
 // outputs new state object
 // should be a pure function -> same input leads to same output -> no side effects
 const counterReducer = (state = { counter: 0 }, action) => {
-  return {
-    counter: state.counter + 1,
-  };
+  if (action.type === "increment") {
+    return {
+      counter: state.counter + 1,
+    };
+  }
+
+  if (action.type === "decrement") {
+    return {
+      counter: state.counter - 1,
+    };
+  }
+  return state;
 };
 
 // createStore needs to know which function is changing the state
@@ -27,3 +36,5 @@ store.subscribe(counterSubscriber);
 
 // creating a dispatch action
 store.dispatch({ type: "increment" });
+
+store.dispatch({ type: "decrement" });
